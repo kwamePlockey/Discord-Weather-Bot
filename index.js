@@ -48,9 +48,4 @@ async function weatherForecast(cityName, weekDay){
     }
 } 
 
-
-
-
-
-
 //weatherForecast("Tamale", "monday").then(res => console.log(res)) 
