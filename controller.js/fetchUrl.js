@@ -1,6 +1,9 @@
+const {isUrlValid} = require("./validateUrl")
+
 async function fetchForecastApi(url){
     try {
-        const res = await fetch(url)
+        if(!isUrlValid(url)) return `Invalid URL`;
+        const res = await fetch(url);
         
         // Error handling for failed fetch response
             if(!res.ok) {
@@ -9,7 +12,7 @@ async function fetchForecastApi(url){
         //Fetching forecast for a particular weekDay from api response
             return await res.json()
          
-    } catch (error) {
+    } catch(error){
         console.log(error);
         return error.message
     }
@@ -17,3 +20,6 @@ async function fetchForecastApi(url){
 }
 
 module.exports = {fetchForecastApi}
+
+let a = fetchForecastApi("a")
+console.log(a)
