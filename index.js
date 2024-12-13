@@ -41,7 +41,7 @@ async function getWeatherForecast(cityName, weekDay){
 
 
 //process with event scheduler
-async function getDailyWeatherUpdates(cityName, time){
+async function getDailyWeatherUpdates(cityName, time = defaultTime){
     try {
         //Fetch forecast api
         const url =  forecastUrl(cityName);
