@@ -1,9 +1,10 @@
 const dotenv = require("dotenv")
 dotenv.config();
+const cron = require("node-cron")
 const {fetchForecastApi} = require("./controller.js/fetchUrl");
 const {filterWeekDayProps} = require("./controller.js/filterFetchRes");
 const {getMidDayApi} = require("./controller.js/midDayFilterFunc");
-const {forecastUrl} = require("./controller.js/url");
+const {generateForecastUrl} = require("./controller.js/url");
 const {returnGenErrorMess} = require("./controller.js/errorMessages");
 const {getWeekDay} = require("./controller.js/generateWeekDay");
 
@@ -11,7 +12,7 @@ const {getWeekDay} = require("./controller.js/generateWeekDay");
 async function getWeatherForecast(cityName, weekDay){
     try {
 
-            const url = forecastUrl(cityName)
+            const url = generateForecastUrl(cityName)
             const weatherData = await fetchForecastApi(url);
             
             //Filter forecast response for specific weekday 
@@ -40,11 +41,11 @@ async function getWeatherForecast(cityName, weekDay){
 
 
 
-//process with event scheduler
-async function getDailyWeatherUpdates(cityName, time = defaultTime){
+
+async function getDailyWeatherUpdates(cityName){
     try {
         //Fetch forecast api
-        const url =  forecastUrl(cityName);
+        const url =  generateForecastUrl(cityName);
         const weatherData = await fetchForecastApi(url);
         
         //Generate weekday
@@ -74,4 +75,8 @@ async function getDailyWeatherUpdates(cityName, time = defaultTime){
     }
 }
 
-//getDailyWeatherUpdates("tamale").then(x => console.log(x))
+
+// event scheduler: return morning weather updates @ 6:00 am daily
+cron.schedule(("0 0 7 * * *"), () => {
+    getDailyWeatherUpdates("tamale").then(x => console.log(x))
+})

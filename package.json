@@ -7,14 +7,15 @@
     "run": "node index.js",
     "dev": "nodemon index.js"
   },
-  "keywords": [],
+  "keywords": ["weather", "discord", "bot", "backend", "node.js"],
   "author": "Kwame Plockey",
   "license": "ISC",
-  "description": "A weather bot that runs on discord. A simple backend project.",
+  "description": "A discord weather. A simple backend project.",
   "devDependencies": {
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3"
   }
 }

@@ -21,5 +21,3 @@ async function fetchForecastApi(url){
 
 module.exports = {fetchForecastApi}
 
-let a = fetchForecastApi("a")
-console.log(a)
