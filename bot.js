@@ -1,5 +1,3 @@
-const dotenv = require("dotenv")
-dotenv.config();
 const cron = require("node-cron")
 const {fetchForecastApi} = require("./controller.js/fetchUrl");
 const {filterWeekDayProps} = require("./controller.js/filterFetchRes");
@@ -21,7 +19,6 @@ async function getWeatherForecast(cityName, weekDay){
 
             //Project mid-day forecast as forecast for entire day
                 const weekDayForecast = getMidDayApi(weekDayForecastArray);
-                console.log(weekDayForecast);
 
             //Parsing response from weekDayForecast obj;
                 //const iconString = weekDayForecast.weather[0].icon;
@@ -77,6 +74,6 @@ async function getDailyWeatherUpdates(cityName){
 
 
 // event scheduler: return morning weather updates @ 6:00 am daily
-cron.schedule(("0 0 7 * * *"), () => {
-    getDailyWeatherUpdates("tamale").then(x => console.log(x))
-})
+ cron.schedule(("0 0 6 * * *"), () => {
+     getDailyWeatherUpdates("tamale").then(x => console.log(x))
+ })
