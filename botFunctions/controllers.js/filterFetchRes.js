@@ -6,7 +6,6 @@ function filterWeekDayProps(data, weekDay){
         let daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
         return daysOfWeek[indexOfWeekDay] === weekDay.toLowerCase();
     }) 
-    console.log(res)
     return res;
 }
 

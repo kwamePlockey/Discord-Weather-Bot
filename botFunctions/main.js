@@ -1,11 +1,13 @@
+require('dotenv').config()
 const cron = require("node-cron")
-const {fetchForecastApi} = require("./controller.js/fetchUrl");
-const {filterWeekDayProps} = require("./controller.js/filterFetchRes");
-const {getMidDayApi} = require("./controller.js/midDayFilterFunc");
-const {generateForecastUrl} = require("./controller.js/url");
-const {returnGenErrorMess} = require("./controller.js/errorMessages");
-const {getWeekDay} = require("./controller.js/generateWeekDay");
+const {fetchForecastApi} = require("./controllers.js/fetchUrl");
+const {filterWeekDayProps} = require("./controllers.js/filterFetchRes");
+const {getMidDayApi} = require("./controllers.js/midDayFilterFunc");
+const {generateForecastUrl} = require("./controllers.js/url");
+const {returnGenErrorMess} = require("./controllers.js/errorMessages");
+const {getWeekDay} = require("./controllers.js/generateWeekDay");
 
+//TO DO : PROPER ERROR HANDLING FOR EACH CONTROLLER
 
 async function getWeatherForecast(cityName, weekDay){
     try {
@@ -33,10 +35,6 @@ async function getWeatherForecast(cityName, weekDay){
     }
 } 
 //getWeatherForecast("Tamale", "friday").then(res => console.log(res))  
-
-
-
-
 
 
 async function getDailyWeatherUpdates(cityName){
@@ -77,3 +75,6 @@ async function getDailyWeatherUpdates(cityName){
  cron.schedule(("0 0 6 * * *"), () => {
      getDailyWeatherUpdates("tamale").then(x => console.log(x))
  })
+
+
+ module.exports = {getWeatherForecast, getDailyWeatherUpdates}

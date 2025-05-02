@@ -4,9 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node index.js",
-    "dev": "nodemon discordClient.js",
-    "bot": "nodemon bot.js"
+    "dev": "nodemon discord.server.js",
+    "utils": "nodemon botFunctions/main.js"
   },
   "keywords": [
     "weather",
