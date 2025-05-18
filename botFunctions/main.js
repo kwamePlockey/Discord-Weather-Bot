@@ -1,11 +1,11 @@
 require('dotenv').config()
-const cron = require("node-cron")
 const {fetchForecastApi} = require("./controllers.js/fetchUrl");
 const {filterWeekDayProps} = require("./controllers.js/filterFetchRes");
 const {getMidDayApi} = require("./controllers.js/midDayFilterFunc");
 const {generateForecastUrl} = require("./controllers.js/url");
 const {returnGenErrorMess} = require("./controllers.js/errorMessages");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
+const cron = require("node-cron")
 
 //TO DO : PROPER ERROR HANDLING FOR EACH CONTROLLER
 
