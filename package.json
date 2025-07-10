@@ -4,17 +4,25 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon discord.server.js",
+    "utils": "nodemon botFunctions/main.js"
   },
-  "keywords": [],
+  "keywords": [
+    "weather",
+    "discord",
+    "bot",
+    "backend",
+    "node.js"
+  ],
   "author": "Kwame Plockey",
   "license": "ISC",
-  "description": "A weather bot that runs on discord. A simple backend project.",
+  "description": "A discord weather bot. A simple node.js backend project.",
   "devDependencies": {
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3"
   }
 }
