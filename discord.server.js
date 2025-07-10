@@ -27,7 +27,6 @@ fs.readdirSync(commandsFolder).map(file => {
 //Command execution
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-	console.log(interaction);
 
 	const command = interaction.client.commands.get(interaction.commandName);
 	if(!command) return;
@@ -36,7 +35,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction)
 	} catch (error) {
 		console.error(error)
-		await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+		await interaction.reply({ content: 'An error occured while executing this command!'});
 	}
 
 });

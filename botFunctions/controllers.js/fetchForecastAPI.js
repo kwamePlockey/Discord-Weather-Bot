@@ -1,6 +1,6 @@
 const {isUrlValid} = require("./validateUrl")
 
-async function fetchForecastApi(url){
+async function fetchForecastAPI(url){
     try {
         if(!isUrlValid(url)) throw new Error `Invalid URL`;
         const res = await fetch(url);
@@ -18,5 +18,5 @@ async function fetchForecastApi(url){
     }  
 }
 
-module.exports = {fetchForecastApi}
+module.exports = {fetchForecastAPI}
 
