@@ -2,7 +2,6 @@ require('dotenv').config()
 const fs = require('node:fs')
 const  token  = process.env.DISCORD_TOKEN
 
-//TO-DO : VIEW INTERACTION OBJECT
 
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
@@ -46,6 +45,4 @@ client.once(Events.ClientReady, readyClient => {
 });
 
 
-
-// Log in to Discord with your client's token
 client.login(token);
