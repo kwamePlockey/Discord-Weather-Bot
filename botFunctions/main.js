@@ -2,7 +2,6 @@ require('dotenv').config()
 const {fetchForecastAPI} = require("./controllers.js/fetchForecastAPI");
 const {filterWeekDayProps} = require("./controllers.js/filterFetchRes");
 const {getMidDayApi} = require("./controllers.js/midDayFilterFunc");
-const {generateForecastUrl} = require("./controllers.js/url");
 const {API_LIMITS} = require("./controllers.js/errorMessages");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
 const cron = require("node-cron")
@@ -11,29 +10,24 @@ const cron = require("node-cron")
 
 async function getWeatherForecast(cityName, weekDay){
     try {
+        const weatherData = await fetchForecastAPI(cityName);
+        //Filter forecast response for specific weekday 
+            const weekDayForecastArray = filterWeekDayProps(weatherData, weekDay); 
 
-            const url = generateForecastUrl(cityName)
-            const weatherData = await fetchForecastAPI(url);
-            //Filter forecast response for specific weekday 
-                const weekDayForecastArray = filterWeekDayProps(weatherData, weekDay); 
+        //Project mid-day forecast as forecast for entire day
+            const weekDayForecast = getMidDayApi(weekDayForecastArray);
+            if(!weekDayForecast){ 
+                return API_LIMITS.MID_DAY_FORECAST_UNAVAILABLE(weekDay)
+            }
+            const forecastDate = new Date(weekDayForecast.dt_txt).toDateString();
+            const city = weatherData.city.name;
 
-            //Project mid-day forecast as forecast for entire day
-                const weekDayForecast = getMidDayApi(weekDayForecastArray);
-                if(!weekDayForecast){ 
-                    return API_LIMITS.MID_DAY_FORECAST_UNAVAILABLE(weekDay)
-                }
-                const forecastDate = new Date(weekDayForecast.dt_txt).toDateString();
-                const city = weatherData.city.name;
-
-            //Parsing response from weekDayForecast obj(convert to function);
-                //const iconString = weekDayForecast.weather[0].icon;
-                //const iconURL = `https://openweathermap.org/img/wn/${iconString}.png`(To be handled with Discord.js package)
-                const forecastResponse = `City: ${city}, \nDate: ${forecastDate}, \nTemperature: ${weekDayForecast.main.temp} ℃ ,\nWeather: ${weekDayForecast.weather[0].description}.`;
-                return forecastResponse;
+        //Parsing response from weekDayForecast obj(convert to function);
+            const forecastResponse = `City: ${city}, \nDate: ${forecastDate}, \nTemperature: ${weekDayForecast.main.temp} ℃ ,\nWeather: ${weekDayForecast.weather[0].description}.`;
+            return forecastResponse;
 
     } catch (error) {
-        console.error(error)
-        return `${error.message}` 
+        throw (error) 
     }
 } 
 

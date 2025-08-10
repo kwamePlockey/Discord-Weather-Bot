@@ -3,9 +3,6 @@ const{API_LIMITS, INVALID_DATA_INPUT} = require('./errorMessages')
 function filterWeekDayProps(data, weekDay){
     let daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-    //weekday sting formatting
-    weekDay = weekDay.toLowerCase().replace(/\.$/gi, '')
-
     //spell check for weekDay
     if(!daysOfWeek.includes(weekDay)) {
         throw new Error(INVALID_DATA_INPUT.INVALID_WEEKDAY(weekDay));

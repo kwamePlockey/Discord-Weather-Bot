@@ -19,13 +19,21 @@ const forecastSlashCommand = new SlashCommandBuilder()
 module.exports = {
   data: forecastSlashCommand,
   async execute(interaction) {
-    const city = interaction.options.getString('city');
-    const weekday = interaction.options.getString('weekday');
+    const city = interaction.options.getString('city')
+    .toLowerCase()
+    .replace(/\.$/gi, '');
+
+
+    const weekday = interaction.options.getString('weekday')
+    .toLowerCase()
+    .replace(/\.$/gi, '');
+
     try {
       const weatherData = await getWeatherForecast(city, weekday);
       await interaction.reply(weatherData);
     } catch (error) {
-      await interaction.reply(error)
+      console.error(error)
+      await interaction.reply(error.message);
     }
   },
 };

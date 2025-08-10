@@ -37,6 +37,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await interaction.reply({ content: 'An error occured while executing this command!'});
 	}
 
+
 });
 
 // When the client is ready, run this code (only once).
