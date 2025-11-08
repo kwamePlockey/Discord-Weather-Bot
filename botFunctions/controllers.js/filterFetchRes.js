@@ -1,4 +1,4 @@
-const{API_LIMITS, INVALID_DATA_INPUT} = require('./errorMessages')
+const{API_LIMIT, INVALID_DATA_INPUT} = require('./errorMessages')
 
 function filterWeekDayProps(data, weekDay){
     let daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -14,7 +14,7 @@ function filterWeekDayProps(data, weekDay){
         return daysOfWeek[indexOfWeekDay]
     })
     if( ! new Set(dataWeekDaysArr).has(weekDay) ) {
-        throw new Error(API_LIMITS.DAY_LIMITS_EXCEEDED)
+        throw new Error(API_LIMIT.DAY_LIMIT_EXCEEDED)
     }
 
     //Filter data for specific weekDay

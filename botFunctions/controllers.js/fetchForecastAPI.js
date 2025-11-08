@@ -17,8 +17,8 @@ async function fetchForecastAPI(cityName){
                     throw new Error(`Error: ${res.status}, ${res.statusText}, ${res.url}`)
                 } 
             }
-        //Fetching forecast for a particular weekDay from api response
-            return await res.json()
+    
+        return await res.json()
          
     } catch(error){
         throw new Error(error.message)

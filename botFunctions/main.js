@@ -1,12 +1,12 @@
 require('dotenv').config()
 const {fetchForecastAPI} = require("./controllers.js/fetchForecastAPI");
 const {filterWeekDayProps} = require("./controllers.js/filterFetchRes");
-const {getMidDayApi} = require("./controllers.js/midDayFilterFunc");
-const {API_LIMITS} = require("./controllers.js/errorMessages");
+const {API_LIMIT} = require("./controllers.js/errorMessages");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
+const getTimeOfDayWeatherData = require("./controllers.js/timeOfDayFilterFunc");
+const getForecastDetails = require('./controllers.js/getForecastDetails');
 const cron = require("node-cron")
 
-//TO DO : PROPER ERROR HANDLING FOR EACH CONTROLLER
 
 async function getWeatherForecast(cityName, weekDay){
     try {
@@ -15,15 +15,17 @@ async function getWeatherForecast(cityName, weekDay){
             const weekDayForecastArray = filterWeekDayProps(weatherData, weekDay); 
 
         //Project mid-day forecast as forecast for entire day
-            const weekDayForecast = getMidDayApi(weekDayForecastArray);
+            const timeOfDay = 'mid_day';
+            const res = getTimeOfDayWeatherData(timeOfDay, weekDayForecastArray);
+            const weekDayForecast = res.mid_day;
             if(!weekDayForecast){ 
-                return API_LIMITS.MID_DAY_FORECAST_UNAVAILABLE(weekDay)
+                return API_LIMIT.FORECAST_UNAVAILABLE(timeOfDay, weekDay)
             }
-            const forecastDate = new Date(weekDayForecast.dt_txt).toDateString();
+            
+        //Parsing response from weekDayForecast obj;
             const city = weatherData.city.name;
-
-        //Parsing response from weekDayForecast obj(convert to function);
-            const forecastResponse = `City: ${city}, \nDate: ${forecastDate}, \nTemperature: ${weekDayForecast.main.temp} ℃ ,\nWeather: ${weekDayForecast.weather[0].description}.`;
+            const {date, temp, weatherDescription} = getForecastDetails(weekDayForecast);
+            const forecastResponse = `City: ${city}, \nDate: ${date}, \nTemperature: ${temp} ℃ ,\nWeather: ${weatherDescription}.`;
             return forecastResponse;
 
     } catch (error) {
@@ -31,38 +33,33 @@ async function getWeatherForecast(cityName, weekDay){
     }
 } 
 
-//might delete
+
 async function getDailyWeatherUpdates(cityName){
-//     try {
-//         //Fetch forecast api
-//         const url =  generateForecastUrl(cityName);
-//         const weatherData = await fetchForecastAPI(url);
+    try {
+        const timeOfDay = ['morning', 'mid_day'];
+        const weatherData = await fetchForecastAPI(cityName);
         
-//         //Generate weekday
-//         const weekDay = getWeekDay();
+        const weekDay = getWeekDay();
         
-//         //Filter forecast response for specific weekday
-//         const weekDayForecastArray = filterWeekDayProps(weatherData, weekDay);
-//         if(weekDayForecastArray.length == 0) return returnGenErrorMess(cityName, weekDay);
+        //Filter forecast response for specific weekday
+        const weekDayForecastArray = filterWeekDayProps(weatherData, weekDay);
+        
+        //Return weatherData for morning & mid_day time periods 
+        const res = getTimeOfDayWeatherData(timeOfDay, weekDayForecastArray);
+        
+        const{morning, mid_day} = res;
+        if(!morning) return API_LIMIT.FORECAST_UNAVAILABLE(morning, weekDay);
+        if(!mid_day) return API_LIMIT.FORECAST_UNAVAILABLE(mid_day, weekDay);
 
-//         //Project mid-day forecast as forecast for entire day;
-//          const weekDayForecast = getMidDayApi(weekDayForecastArray);
-//          const forecastFormatDate = new Date(weekDayForecast.dt).toDateString();
-//         if(!weekDayForecast) return returnGenErrorMess(cityName, weekDay);
-//         console.log(weekDayForecast)
+        //Parsing response from getTimeOfDayWeatherData func;
+        const city = weatherData.city.name;
+        const morningWeatherForecast = getForecastDetails(morning);
+        const mid_dayWeatherForecast = getForecastDetails(mid_day);
+        const forecastResponse = `Good morning! Today in ${city}: ${morningWeatherForecast.temp}, ${morningWeatherForecast.weatherDescription}. \n ${mid_dayWeatherForecast.weatherDescription} - ${suggestions}`
 
-//         //Parsing response from weekDayForecast obj;
-//                 //const iconString = weekDayForecast.weather[0].icon;
-//                 //const iconURL = `https://openweathermap.org/img/wn/${iconString}.png`(To be handled with Discord.js package)
-//                 const forecastResponse = `City: ${weekDayForecast.name}, \nDate: ${forecastFormatDate}, \nTemperature: ${weekDayForecast.main.temp} ℃ ,\nWeather: ${weekDayForecast.weather[0].description}.`;
-//                 //personalized recommendations;
-//                 return forecastResponse;
-
-    
-//     } catch (error) {
-//         console.log(error.message);
-//         return error.message;
-//     }
+    } catch (error) {
+        throw (error)
+    }
 }
 
 
