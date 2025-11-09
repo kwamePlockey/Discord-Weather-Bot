@@ -1,9 +1,8 @@
 require('dotenv').config()
 const {fetchForecastAPI} = require("./controllers.js/fetchForecastAPI");
-const {filterWeekDayProps} = require("./controllers.js/filterFetchRes");
-const {API_LIMIT} = require("./controllers.js/errorMessages");
+const {filterWeekDayProps, getTimeOfDayWeatherData} = require("./controllers.js/filterFetchRes");
+const {API_LIMIT} = require("./controllers.js/constants");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
-const getTimeOfDayWeatherData = require("./controllers.js/timeOfDayFilterFunc");
 const getForecastDetails = require('./controllers.js/getForecastDetails');
 const cron = require("node-cron")
 
@@ -55,7 +54,7 @@ async function getDailyWeatherUpdates(cityName){
         const city = weatherData.city.name;
         const morningWeatherForecast = getForecastDetails(morning);
         const mid_dayWeatherForecast = getForecastDetails(mid_day);
-        const forecastResponse = `Good morning! Today in ${city}: ${morningWeatherForecast.temp}, ${morningWeatherForecast.weatherDescription}. \n ${mid_dayWeatherForecast.weatherDescription} - ${suggestions}`
+        const forecastResponse = `Good morning! Today in ${city}: ${morningWeatherForecast.temp}, ${morningWeatherForecast.weatherDescription}. \n ${mid_dayWeatherForecast.weatherDescription} in the afternoon, - ${suggestions}`
 
     } catch (error) {
         throw (error)
