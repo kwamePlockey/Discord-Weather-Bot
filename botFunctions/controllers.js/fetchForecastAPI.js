@@ -1,7 +1,8 @@
 const {generateForecastUrl} = require("./url");
 const {isUrlValid} = require("./validateUrl")
-const {INVALID_DATA_INPUT} = require('./errorMessages') 
+const {INVALID_DATA_INPUT} = require('./constants') 
 
+//Refactor function
 async function fetchForecastAPI(cityName){
     const url = generateForecastUrl(cityName)
     try {
