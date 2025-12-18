@@ -9,4 +9,14 @@ INVALID_DATA_INPUT = {
     INVALID_WEEKDAY: (weekDay) => `Invalid weekday: "${weekDay}". Please check the spelling and try again.`,
 }
 
-module.exports = {API_LIMIT, INVALID_DATA_INPUT};
+
+forecastString = {
+    WEATHER_FORECASTS: (mid_dayForecast, city) => `City: ${city}, \nDate: ${date}, \nTemperature: ${temp} ℃ ,\nWeather: ${weatherDescription}.`,
+    DAILY_WEATHER_UPDATES: {
+        MORNING: (morningForecast, city) => `Good morning! Today in ${city}: ${morningForecast.temp}, ${morningForecast.weatherDescription}.`,
+        MID_DAY: (mid_dayForecast) => `${mid_dayForecast.weatherDescription} in the afternoon`,
+        SUGGESTION: () => ``
+    }
+}
+
+module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastResponses};

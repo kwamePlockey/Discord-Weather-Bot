@@ -1,7 +1,7 @@
 require('dotenv').config()
 const {fetchForecastAPI} = require("./controllers.js/fetchForecastAPI");
 const {filterWeekDayProps, getTimeOfDayWeatherData} = require("./controllers.js/filterFetchRes");
-const {API_LIMIT} = require("./controllers.js/constants");
+const {API_LIMIT, forecastString} = require("./controllers.js/constants");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
 const getForecastDetails = require('./controllers.js/getForecastDetails');
 const cron = require("node-cron")
@@ -23,9 +23,9 @@ async function getWeatherForecast(cityName, weekDay){
             
         //Parsing response from weekDayForecast obj;
             const city = weatherData.city.name;
-            const {date, temp, weatherDescription} = getForecastDetails(weekDayForecast);
-            const forecastResponse = `City: ${city}, \nDate: ${date}, \nTemperature: ${temp} ℃ ,\nWeather: ${weatherDescription}.`;
-            return forecastResponse;
+            const forecastDetails = getForecastDetails(weekDayForecast);
+            const response = forecastString.WEATHER_FORECASTS(forecastDetails, city);
+            return response
 
     } catch (error) {
         throw (error) 
@@ -52,12 +52,17 @@ async function getDailyWeatherUpdates(cityName){
 
         //Parsing response from getTimeOfDayWeatherData func;
         const city = weatherData.city.name;
-        const morningWeatherForecast = getForecastDetails(morning);
-        const mid_dayWeatherForecast = getForecastDetails(mid_day);
-        const forecastResponse = `Good morning! Today in ${city}: ${morningWeatherForecast.temp}, ${morningWeatherForecast.weatherDescription}. \n ${mid_dayWeatherForecast.weatherDescription} in the afternoon, - ${suggestions}`
-
+        const morningWeather = getForecastDetails(morning);
+        const mid_dayWeather = getForecastDetails(mid_day);
+        const morningWeatherString = forecastString.DAILY_WEATHER_UPDATES.MORNING(morningWeather, city);
+        const mid_dayWeatherString = forecastString.DAILY_WEATHER_UPDATES.MORNING(mid_dayWeather);
+        //(suggestion)
+        const response = `${morningWeatherString}\n${mid_dayWeatherString}`;
+        return response
+        
     } catch (error) {
         throw (error)
+
     }
 }
 
