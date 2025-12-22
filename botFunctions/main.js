@@ -62,7 +62,6 @@ async function getDailyWeatherUpdates(cityName){
         
     } catch (error) {
         throw (error)
-
     }
 }
 

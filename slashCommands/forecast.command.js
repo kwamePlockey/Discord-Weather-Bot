@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { getWeatherForecast } = require('../botFunctions/main');
 
-// TO-DO: Parse options for city & weekday params
+
 const forecastSlashCommand = new SlashCommandBuilder()
   .setName('forecast')
   .setDescription('Returns weather forecast for specified city and weekday')
