@@ -3,7 +3,7 @@ const { getDailyWeatherUpdates } = require('../botFunctions/main');
 const {subscriptionMessage} = require('../botFunctions/controllers.js/constants')
 
 const dailyUpdateSlashCommand = new SlashCommandBuilder()
-  .setName('subscribe forecast-daily')
+  .setName('subscribe_forecast_daily')
   .setDescription('Returns personalized daily morning forecasts with smart weather features')
   .addStringOption(option => 
     option.setName('city')
@@ -21,15 +21,16 @@ module.exports = {
     .replace(/\.$/gi, '');
 
     try {
-      interaction.reply(subscriptionMessage.DAILY_WEATHER_UPDATES(city));
+        //check if city exists
+        interaction.reply(subscriptionMessage.DAILY_WEATHER_UPDATES(city));
+        //const weatherData = await getDailyWeatherUpdates(city);
 
-      const weatherData = await getDailyWeatherUpdates(city);
       //set-up cron
     } catch (error) {
       console.error(error)
       await interaction.reply(error.message);
     }
 
-    
+
   },
 };

@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon discord.server.js",
-    "utils": "nodemon botFunctions/main.js"
+    "deploy-commands": "nodemon deploy-commands.js"
   },
   "keywords": [
     "weather",
