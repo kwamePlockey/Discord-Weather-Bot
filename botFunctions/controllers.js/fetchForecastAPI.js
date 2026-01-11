@@ -12,7 +12,7 @@ async function fetchForecastAPI(cityName){
         
         // Error handling for failed fetch response
             if(!res.ok) {
-                if(res.status = '404'){
+                if(res.status == '404'){
                     throw new Error(INVALID_DATA_INPUT.CITY_NOT_FOUND(cityName))
                 } else {
                     throw new Error(`Error: ${res.status}, ${res.statusText}, ${res.url}`)
@@ -22,9 +22,9 @@ async function fetchForecastAPI(cityName){
         return await res.json()
          
     } catch(error){
-        throw new Error(error.message)
+        throw error
     }  
 }
 
-module.exports = {fetchForecastAPI}
+module.exports = fetchForecastAPI
 
