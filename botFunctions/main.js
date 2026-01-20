@@ -1,5 +1,5 @@
 require('dotenv').config()
-const {fetchForecastAPI} = require("./controllers.js/fetchForecastAPI");
+const fetchForecastAPI = require("./controllers.js/fetchForecastAPI");
 const {filterWeekDayProps, getTimeOfDayWeatherData} = require("./controllers.js/filterFetchRes");
 const {API_LIMIT, forecastString} = require("./controllers.js/constants");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
@@ -45,7 +45,7 @@ async function getDailyWeatherUpdates(cityName){
         
         //Return weatherData for morning & mid_day time periods 
         const res = getTimeOfDayWeatherData(timeOfDay, weekDayForecastArray);
-        
+
         const{morning, mid_day} = res;
         if(!morning) return API_LIMIT.FORECAST_UNAVAILABLE(morning, weekDay);
         if(!mid_day) return API_LIMIT.FORECAST_UNAVAILABLE(mid_day, weekDay);
