@@ -5,7 +5,7 @@ const API_LIMIT = {
 
 const INVALID_DATA_INPUT = {
     timeOfDay_PARAM: `timeOfDay param accepts the strings ("morning" | "mid_day") or an array of strings`,
-    CITY_NOT_FOUND: (cityName) => `City not found: ${cityName}. Please check the city name and try again.`,
+    CITY_NOT_FOUND: (cityName) => `City not found: ${cityName} \nPlease check the city name and try again.`,
     INVALID_WEEKDAY: (weekDay) => `Invalid weekday: "${weekDay}". Please check the spelling and try again.`,
 }
 
@@ -20,7 +20,7 @@ const forecastString = {
 }
 
 const subscriptionMessage = {
-    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing!.\nYou'll get your daily "${city.toUpperCase()}" forecast at 8:00AM each morning.`
+    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing!.\nYou'll get your daily weather forecast for '${city.toUpperCase()}' at 8:00AM each morning.`
 }
 
 module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastString, subscriptionMessage};
