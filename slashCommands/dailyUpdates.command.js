@@ -17,22 +17,23 @@ module.exports = {
   data: dailyUpdateSlashCommand,
 
   async execute(interaction) {
+    await interaction.deferReply() // extends expected response time from 3secs to 15mins; 
+		
     const city = interaction.options.getString('city')
     .toLowerCase()
     .replace(/\.$/gi, '');
-
+     
     try {
-        if(await cityExists(city)){
-        interaction.reply(subscriptionMessage.DAILY_WEATHER_UPDATES(city));
+      if(await cityExists(city)){
+          interaction.editReply(subscriptionMessage.DAILY_WEATHER_UPDATES(city));
         }
 
         //set-up cron
         //const weatherData = await getDailyWeatherUpdates(city);
     } catch (error) {
       console.error(error)
-      await interaction.reply(error.message);
-    }
-
+      await interaction.editReply(error.message);
+    }  
 
   },
 };

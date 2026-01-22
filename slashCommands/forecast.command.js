@@ -18,7 +18,10 @@ const forecastSlashCommand = new SlashCommandBuilder()
 
 module.exports = {
   data: forecastSlashCommand,
+  
   async execute(interaction) {
+    await interaction.deferReply() // extends expected response time from 3secs to 15mins;
+
     const city = interaction.options.getString('city')
     .toLowerCase()
     .replace(/\.$/gi, '');
@@ -30,10 +33,10 @@ module.exports = {
 
     try {
       const weatherData = await getWeatherForecast(city, weekday);
-      await interaction.reply(weatherData);
+      await interaction.editReply(weatherData);
     } catch (error) {
       console.error(error)
-      await interaction.reply(error.message);
+      await interaction.editReply(error.message);
     }
   },
 };
