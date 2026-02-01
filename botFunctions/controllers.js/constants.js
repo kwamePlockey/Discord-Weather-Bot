@@ -20,7 +20,8 @@ const forecastString = {
 }
 
 const subscriptionMessage = {
-    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing!.\nYou'll get your daily weather forecast for '${city.toUpperCase()}' at 8:00AM each morning.`
+    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing! \nYou'll get your daily weather forecast for ${city.toUpperCase()}
+     at 8:00AM each morning.`
 }
 
 module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastString, subscriptionMessage};
