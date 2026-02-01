@@ -4,7 +4,6 @@ const {filterWeekDayProps, getTimeOfDayWeatherData} = require("./controllers.js/
 const {API_LIMIT, forecastString} = require("./controllers.js/constants");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
 const getForecastDetails = require('./controllers.js/getForecastDetails');
-const cron = require("node-cron")
 
 
 async function getWeatherForecast(cityName, weekDay){
@@ -66,10 +65,7 @@ async function getDailyWeatherUpdates(cityName){
 }
 
 
-// event scheduler: return morning weather updates @ 6:00 am daily
-//  cron.schedule(("0 0 6 * * *"), () => {
-//      getDailyWeatherUpdates("tamale").then(x => console.log(x))
-//  })
+
 
 
  module.exports = {getWeatherForecast, getDailyWeatherUpdates}
