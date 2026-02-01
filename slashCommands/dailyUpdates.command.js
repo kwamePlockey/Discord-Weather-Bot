@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { getDailyWeatherUpdates } = require('../botFunctions/main');
-const {subscriptionMessage} = require('../botFunctions/controllers.js/constants')
-const cityExists = require('../botFunctions/controllers.js/fetchForecastAPI')
+const {subscriptionMessage} = require('../botFunctions/controllers.js/constants');
+const cityExists = require('../botFunctions/controllers.js/fetchForecastAPI');
+const cron = require("node-cron");
 
 const dailyUpdateSlashCommand = new SlashCommandBuilder()
   .setName('subscribe_forecast_daily')
@@ -17,7 +18,7 @@ module.exports = {
   data: dailyUpdateSlashCommand,
 
   async execute(interaction) {
-    await interaction.deferReply() // extends expected response time from 3secs to 15mins; 
+    await interaction.deferReply(); // extends expected response time from 3secs to 15mins; 
 		
     const city = interaction.options.getString('city')
     .toLowerCase()
@@ -25,15 +26,19 @@ module.exports = {
      
     try {
       if(await cityExists(city)){
-          interaction.editReply(subscriptionMessage.DAILY_WEATHER_UPDATES(city));
-        }
+          interaction.editReply( subscriptionMessage.DAILY_WEATHER_UPDATES(city) );
+      }
 
-        //set-up cron
-        //const weatherData = await getDailyWeatherUpdates(city);
+      // event scheduler: return morning weather updates @ 6:00 am daily
+      cron.schedule(("0 14 2 * * *"), () => {
+        getDailyWeatherUpdates(city).then(x => {
+          interaction.editReply(x)
+        }) 
+      })
     } catch (error) {
       console.error(error)
       await interaction.editReply(error.message);
     }  
 
   },
-};
+}; 
