@@ -1,6 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { getWeatherForecast } = require('../botFunctions/main');
-
 
 const forecastSlashCommand = new SlashCommandBuilder()
   .setName('forecast')
@@ -11,8 +9,17 @@ const forecastSlashCommand = new SlashCommandBuilder()
 				.setRequired(true)
   )
   .addStringOption(option => 
-    option.setName('weekday')
+    option.setName('day')
 				.setDescription('specify weekday')
+        .addChoices(
+					{ name: 'Mon', value: 'Monday' },
+					{ name: 'Tue', value: 'Tuesday' },
+					{ name: 'Wed', value: 'Wednesday' },
+          { name: 'Thurs', value: 'Thursday' },
+          { name: 'Fri', value: 'Friday' },
+          { name: 'Sat', value: 'Saturday' },
+          { name: 'Sun', value: 'Sunday' },
+				)
 				.setRequired(true)
   );
 
@@ -27,7 +34,7 @@ module.exports = {
     .replace(/\.$/gi, '');
 
 
-    const weekday = interaction.options.getString('weekday')
+    const weekday = interaction.options.getString('day')
     .toLowerCase()
     .replace(/\.$/gi, '');
 

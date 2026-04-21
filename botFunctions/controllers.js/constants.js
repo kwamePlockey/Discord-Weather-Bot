@@ -1,6 +1,6 @@
 const API_LIMIT = {
     DAY_LIMIT_EXCEEDED:"The requested weekday's forecast exceeds the allowed 5 days limit.",
-    FORECAST_UNAVAILABLE: (timeOfDay, weekDay) => `API LIMIT!\nSorry, can not return ${timeOfDay} forecast for ${weekDay}.`,
+    FORECAST_UNAVAILABLE: (timeOfDay, weekDay) => `API LIMIT!\nSorry, can not return ${weekDay.toUpperCase()} ${timeOfDay} weather forecast.`,
 }
 
 const INVALID_DATA_INPUT = {
@@ -22,5 +22,6 @@ const forecastString = {
 const subscriptionMessage = {
     DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing! \nYou'll get your daily weather forecast for ${city.toUpperCase()} at 8:00AM each morning.`
 }
+
 
 module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastString, subscriptionMessage};

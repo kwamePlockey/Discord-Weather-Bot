@@ -46,15 +46,15 @@ async function getDailyWeatherUpdates(cityName){
         const res = getTimeOfDayWeatherData(timeOfDay, weekDayForecastArray);
 
         const{morning, mid_day} = res;
-        if(!morning) return API_LIMIT.FORECAST_UNAVAILABLE(morning, weekDay);
-        if(!mid_day) return API_LIMIT.FORECAST_UNAVAILABLE(mid_day, weekDay);
+        if(!morning) return API_LIMIT.FORECAST_UNAVAILABLE('morning', weekDay);
+        if(!mid_day) return API_LIMIT.FORECAST_UNAVAILABLE('mid_day', weekDay);
 
         //Parsing response from getTimeOfDayWeatherData func;
         const city = weatherData.city.name;
         const morningWeather = getForecastDetails(morning);
         const mid_dayWeather = getForecastDetails(mid_day);
         const morningWeatherString = forecastString.DAILY_WEATHER_UPDATES.MORNING(morningWeather, city);
-        const mid_dayWeatherString = forecastString.DAILY_WEATHER_UPDATES.MORNING(mid_dayWeather);
+        const mid_dayWeatherString = forecastString.DAILY_WEATHER_UPDATES.MID_DAY(mid_dayWeather);
         //(suggestion)
         const response = `${morningWeatherString}\n${mid_dayWeatherString}`;
         return response

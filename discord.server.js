@@ -1,7 +1,10 @@
-require('dotenv').config()
-const fs = require('node:fs')
-const  token  = process.env.DISCORD_TOKEN
-
+require('dotenv').config();
+const fs = require('node:fs');
+const { getWeatherForecast, getDailyWeatherUpdates } = require('./botFunctions/main');
+const token  = process.env.DISCORD_TOKEN;
+const channel_id = process.env.CHANNEL_ID;
+const cron = require('node-cron');
+const dB = require('./mockDB');
 
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
@@ -31,18 +34,36 @@ client.on(Events.InteractionCreate, async interaction => {
 	if(!command) return;
 
 	try {
-		await command.execute(interaction)
+		await command.execute(interaction);
+
 	} catch (error) {
 		console.error(error)
 		await interaction.reply({ content: 'An error occured while executing this command!'});
 	}
 
 
-});
+} );
+
 
 // When the client is ready, run this code (only once).
-client.once(Events.ClientReady, readyClient => {
+client.once(Events.ClientReady, async readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+	
+
+	cron.schedule( ("0 0 8 * * *"), async () => {
+		console.log([...dB])
+		const channel = await client.channels.fetch(channel_id);
+		const UnresolvedForecastArrayOfEachCity = [...dB].map(city => {
+			console.log(city)
+			return getDailyWeatherUpdates(city)
+		} )	
+
+		const resolvedForecastArrayOfEachCity = await Promise.allSettled(UnresolvedForecastArrayOfEachCity);
+
+		return resolvedForecastArrayOfEachCity.forEach(forecast => channel.send(forecast.value));
+	})
+
+	
 });
 
 
