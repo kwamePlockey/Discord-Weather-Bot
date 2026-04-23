@@ -1,9 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { getDailyWeatherUpdates } = require('../botFunctions/main');
 const {subscriptionMessage} = require('../botFunctions/controllers.js/constants');
-const cityExists = require('../botFunctions/controllers.js/fetchForecastAPI');
+const fetchForecastAPI = require('../botFunctions/controllers.js/fetchForecastAPI');
 const dB = require('../mockDB')
-const cron = require("node-cron");
 
 const dailyForecastSlashCommand = new SlashCommandBuilder()
   .setName('subscribe_forecast_daily')
@@ -24,9 +22,11 @@ module.exports = {
     const city = interaction.options.getString('city')
     .toLowerCase()
     .replace(/\.$/gi, '');
-     
+
     try {
-      if( await cityExists(city) ){
+      const cityExists = await fetchForecastAPI(city);
+      if(cityExists){ 
+          const city = cityExists.city.name;
           dB.add(city);
           console.log(dB)
           interaction.editReply( subscriptionMessage.DAILY_WEATHER_UPDATES(city) );
