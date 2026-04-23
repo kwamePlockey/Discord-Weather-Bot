@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const {getWeatherForecast} = require('../botFunctions/main');
 
 const forecastSlashCommand = new SlashCommandBuilder()
   .setName('forecast')

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('node:fs');
-const { getWeatherForecast, getDailyWeatherUpdates } = require('./botFunctions/main');
+const { getDailyWeatherUpdates } = require('./botFunctions/main');
 const token  = process.env.DISCORD_TOKEN;
 const channel_id = process.env.CHANNEL_ID;
 const cron = require('node-cron');
@@ -50,11 +50,10 @@ client.once(Events.ClientReady, async readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 	
 
-	cron.schedule( ("0 0 8 * * *"), async () => {
+	cron.schedule( ("0 23 8 * * *"), async () => {
 		console.log([...dB])
 		const channel = await client.channels.fetch(channel_id);
 		const UnresolvedForecastArrayOfEachCity = [...dB].map(city => {
-			console.log(city)
 			return getDailyWeatherUpdates(city)
 		} )	
 
