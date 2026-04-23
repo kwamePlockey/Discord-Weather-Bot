@@ -1,6 +1,8 @@
+const capitalize = require('./capitalizeString')
+
 const API_LIMIT = {
     DAY_LIMIT_EXCEEDED:"The requested weekday's forecast exceeds the allowed 5 days limit.",
-    FORECAST_UNAVAILABLE: (timeOfDay, weekDay) => `API LIMIT!\nSorry, can not return ${weekDay.toUpperCase()} ${timeOfDay} weather forecast.`,
+    FORECAST_UNAVAILABLE: (timeOfDay, weekDay) => `API LIMIT!\nSorry, can not return ${capitalize(weekDay)} ${timeOfDay} weather forecast.`,
 }
 
 const INVALID_DATA_INPUT = {
@@ -11,16 +13,16 @@ const INVALID_DATA_INPUT = {
 
 
 const forecastString = {
-    WEATHER_FORECASTS: (mid_dayForecast, city) => `City: ${city}, \nDate: ${mid_dayForecast.date}, \nTemperature: ${mid_dayForecast.temp} ℃ ,\nWeather: ${mid_dayForecast.weatherDescription}.`,
+    WEATHER_FORECASTS: (mid_dayForecast, city) => `City: ${city}, \nDate: ${mid_dayForecast.date}, \nTemperature: ${mid_dayForecast.temp} ℃ ,\nWeather: ${capitalize(mid_dayForecast.weatherDescription)}.`,
     DAILY_WEATHER_UPDATES: {
-        MORNING: (morningForecast, city) => `Good morning! Today in ${city}: ${morningForecast.temp}, ${morningForecast.weatherDescription}.`,
-        MID_DAY: (mid_dayForecast) => `${mid_dayForecast.weatherDescription} in the afternoon`,
+        MORNING: (morningForecast, city) => `Good Morning! \nToday in ${city}: ${morningForecast.temp} ℃, ${capitalize(morningForecast.weatherDescription)}.`,
+        MID_DAY: (mid_dayForecast) => `${capitalize(mid_dayForecast.weatherDescription)} in the Afternoon \n_`,
         SUGGESTION: () => ``
     }
 }
 
 const subscriptionMessage = {
-    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing! \nYou'll get your daily weather forecast for ${city.toUpperCase()} at 8:00AM each morning.`
+    DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing to the Daily Weather Updates Feature! \nYou'll get your daily weather forecast for ${city} at 8:00 AM each morning.`
 }
 
 
