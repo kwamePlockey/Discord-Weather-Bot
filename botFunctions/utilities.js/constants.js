@@ -27,8 +27,8 @@ const subscriptionMessage = {
 
 const scheduledTimeForDailyForecastUpdates = {
     seconds: '0',
-    minutes: '57',
-    hour: '16',
+    minutes: '0',
+    hour: '8',
     dayOfMonth: '*',
     month: '*',
     dayOfWeek: '*',
