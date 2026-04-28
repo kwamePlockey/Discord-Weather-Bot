@@ -25,5 +25,13 @@ const subscriptionMessage = {
     DAILY_WEATHER_UPDATES: (city) => `Thanks for subscribing to the Daily Weather Updates Feature! \nYou'll get your daily weather forecast for ${city} at 8:00 AM each morning.`
 }
 
+const scheduledTimeForDailyForecastUpdates = {
+    seconds: '0',
+    minutes: '57',
+    hour: '16',
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+}
 
-module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastString, subscriptionMessage};
+module.exports = {API_LIMIT, INVALID_DATA_INPUT, forecastString, subscriptionMessage, scheduledTimeForDailyForecastUpdates, };

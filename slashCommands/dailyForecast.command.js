@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {subscriptionMessage} = require('../botFunctions/controllers.js/constants');
+const {subscriptionMessage} = require('../botFunctions/utilities.js/constants');
 const fetchForecastAPI = require('../botFunctions/controllers.js/fetchForecastAPI');
 const dB = require('../mockDB')
 

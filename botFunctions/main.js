@@ -1,7 +1,7 @@
 require('dotenv').config()
 const fetchForecastAPI = require("./controllers.js/fetchForecastAPI");
 const {filterWeekDayProps, getTimeOfDayWeatherData} = require("./controllers.js/filterFetchRes");
-const {API_LIMIT, forecastString} = require("./controllers.js/constants");
+const {API_LIMIT, forecastString} = require("./utilities.js/constants");
 const {getWeekDay} = require("./controllers.js/generateWeekDay");
 const getForecastDetails = require('./controllers.js/getForecastDetails');
 

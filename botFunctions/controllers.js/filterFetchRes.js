@@ -1,4 +1,4 @@
-const{API_LIMIT, INVALID_DATA_INPUT} = require('./constants')
+const{API_LIMIT, INVALID_DATA_INPUT} = require('../utilities.js/constants')
  
 //re-factor functions
 function filterWeekDayProps(data, weekDay){
